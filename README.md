@@ -27,14 +27,16 @@
 
 ### Prerequisites
 - Python 3.11+
-- OpenAI API key or compatible proxy
+- Docker & Docker Compose (recommended)
 - Git
+- PostgreSQL, Redis, Qdrant (if running locally)
 
 ### Installation
 
 1. **Clone and Install**
 ```bash
-git clone https://github.com/tuanle96/cognify.git
+# Clone the repository
+git clone <repository-url>
 cd cognify
 poetry install
 ```
@@ -42,8 +44,8 @@ poetry install
 2. **Configure Environment**
 ```bash
 # Copy template and customize
-cp .env.example .env.development
-nano .env.development  # Add your API keys
+cp .env.example .env
+nano .env  # Update configuration for your environment
 ```
 
 3. **Start Application**
@@ -69,18 +71,38 @@ curl -X POST "http://localhost:8000/api/v1/chunk" \
   -d '{"content": "def hello(): return \"world\"", "language": "python"}'
 ```
 
-### 🐳 Docker Deployment
+### 🐳 Docker Deployment (Recommended)
+
+**Prerequisites**: Docker & Docker Compose installed
 
 ```bash
-# Development with database
+# 1. Configure environment
+cp .env.example .env
+# Edit .env with your settings (database passwords, etc.)
+
+# 2. Start all services
 docker-compose up -d
 
-# Production deployment
-docker-compose -f docker-compose.production.yml up -d
+# 3. Check service status
+docker-compose ps
 
-# Database only
-docker-compose -f docker-compose.database.yml up -d
+# 4. View logs
+docker-compose logs -f cognify-api
+
+# 5. Access the application
+# API: http://localhost:8000
+# Docs: http://localhost:8000/docs
+# Health: http://localhost:8000/health
+
+# Stop all services
+docker-compose down
 ```
+
+**Services included:**
+- `cognify-api`: Main FastAPI application (port 8000)
+- `postgres`: PostgreSQL database (port 5432)
+- `redis`: Redis cache (port 6379)
+- `qdrant`: Vector database (port 6333)
 
 ## 📖 API Usage
 
@@ -142,18 +164,33 @@ poetry run mypy .
 ### Environment Setup
 ```bash
 # Available environment files
-.env.example      # Complete template
-.env.development  # Development config
-.env.production   # Production config
+.env.example              # Development template
+.env.production.example   # Production template
 
 # Setup for development
-cp .env.example .env.development
-nano .env.development  # Add your API keys
+cp .env.example .env
+nano .env  # Update configuration
 
-# Key settings
-LITELLM_API_KEY=your-api-key
-DEFAULT_LLM_PROVIDER=openai
-CHUNKING_STRATEGY=hybrid
+# Key settings (all managed via database in production)
+ENVIRONMENT=development
+DEBUG=true
+DATABASE_URL=postgresql://cognify:password@localhost:5432/cognify_dev
+QDRANT_URL=http://localhost:6333
+REDIS_URL=redis://localhost:6379/0
+```
+
+### LLM Configuration
+```bash
+# LLM settings are now managed via database
+# Use the admin API to configure providers:
+curl -X POST "http://localhost:8000/api/v1/admin/llm-providers" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "openai",
+    "provider_type": "openai",
+    "api_key": "your-api-key",
+    "base_url": "https://api.openai.com/v1"
+  }'
 ```
 
 ### Security Best Practices
