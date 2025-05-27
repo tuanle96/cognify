@@ -1,3 +1,16 @@
+# Cognify Production Docker Compose Configuration
+#
+# Port Mapping (127.0.0.1 for security):
+# - cognify-api:  30000 -> 8000  (API Server)
+# - postgres:     30001 -> 5432  (Database)
+# - redis:        30002 -> 6379  (Cache)
+# - qdrant:       30003 -> 6333  (Vector DB HTTP)
+# - qdrant:       30004 -> 6334  (Vector DB gRPC)
+# - nginx:        30005 -> 80    (HTTP Proxy)
+# - nginx:        30006 -> 443   (HTTPS Proxy)
+# - prometheus:   30007 -> 9090  (Monitoring)
+# - grafana:      30008 -> 3000  (Dashboard)
+
 services:
   # Cognify API Service - Production
   cognify-api:
@@ -6,8 +19,10 @@ services:
       dockerfile: Dockerfile
     image: cognify/api:production
     container_name: cognify-api
+    # Port exposure - uncomment if you need direct access to API
+    # For production, access via nginx reverse proxy is recommended
     ports:
-      - "8000:8000"
+      - "127.0.0.1:30000:8000"
     environment:
       - DATABASE_URL=postgresql://cognify:${DB_PASSWORD}@postgres:5432/cognify_production
       - REDIS_URL=redis://redis:6379/0
@@ -60,7 +75,7 @@ services:
       - postgres_production_data:/var/lib/postgresql/data
       - ./scripts/init-production-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
-      - "5432:5432"
+      - "127.0.0.1:30001:5432"
     restart: always
     networks:
       - cognify-network
@@ -84,7 +99,7 @@ services:
     container_name: cognify-redis
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     ports:
-      - "6379:6379"
+      - "127.0.0.1:30002:6379"
     volumes:
       - redis_production_data:/data
     restart: always
@@ -109,8 +124,8 @@ services:
     image: qdrant/qdrant:latest
     container_name: cognify-qdrant
     ports:
-      - "6333:6333"
-      - "6334:6334"
+      - "127.0.0.1:30003:6333"
+      - "127.0.0.1:30004:6334"
     volumes:
       - qdrant_production_data:/qdrant/storage
     environment:
@@ -140,8 +155,8 @@ services:
     image: nginx:alpine
     container_name: cognify-nginx
     ports:
-      - "80:80"
-      - "443:443"
+      - "127.0.0.1:30005:80"
+      - "127.0.0.1:30006:443"
     volumes:
       - ./infrastructure/docker/nginx-production.conf:/etc/nginx/nginx.conf
       - ./infrastructure/docker/ssl:/etc/nginx/ssl
@@ -161,7 +176,7 @@ services:
     image: prom/prometheus:latest
     container_name: cognify-prometheus
     ports:
-      - "9090:9090"
+      - "127.0.0.1:30007:9090"
     volumes:
       - ./infrastructure/docker/prometheus-production.yml:/etc/prometheus/prometheus.yml
       - prometheus_production_data:/prometheus
@@ -191,7 +206,7 @@ services:
     image: grafana/grafana:latest
     container_name: cognify-grafana
     ports:
-      - "3000:3000"
+      - "127.0.0.1:30008:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
       - GF_SECURITY_ADMIN_USER=admin

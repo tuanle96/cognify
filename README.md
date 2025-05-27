@@ -90,19 +90,24 @@ docker-compose ps
 docker-compose logs -f cognify-api
 
 # 5. Access the application
-# API: http://localhost:8000
-# Docs: http://localhost:8000/docs
-# Health: http://localhost:8000/health
+# API: http://localhost:30000
+# Docs: http://localhost:30000/docs
+# Health: http://localhost:30000/health
+# Nginx Proxy: http://localhost:30005
+# Grafana: http://localhost:30008
 
 # Stop all services
 docker-compose down
 ```
 
-**Services included:**
-- `cognify-api`: Main FastAPI application (port 8000)
-- `postgres`: PostgreSQL database (port 5432)
-- `redis`: Redis cache (port 6379)
-- `qdrant`: Vector database (port 6333)
+**Services & Port Mapping (127.0.0.1 for security):**
+- `cognify-api`: FastAPI application (30000 → 8000)
+- `postgres`: PostgreSQL database (30001 → 5432)
+- `redis`: Redis cache (30002 → 6379)
+- `qdrant`: Vector database (30003 → 6333, 30004 → 6334)
+- `nginx`: Reverse proxy (30005 → 80, 30006 → 443)
+- `prometheus`: Monitoring (30007 → 9090)
+- `grafana`: Dashboard (30008 → 3000)
 
 ## 📖 API Usage
 
