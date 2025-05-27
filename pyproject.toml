@@ -1,0 +1,90 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "cognify"
+version = "0.1.0"
+description = "AI-Powered Intelligent Codebase Analysis Platform with Agentic Chunking"
+authors = ["Cognify Team <team@cognify.ai>"]
+readme = "README.md"
+packages = [{include = "app"}, {include = "agents"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+# FastAPI and web framework
+fastapi = "^0.104.1"
+uvicorn = {extras = ["standard"], version = "^0.24.0"}
+pydantic = {extras = ["email"], version = "^2.5.0"}
+pydantic-settings = "^2.1.0"
+
+# Essential AI frameworks (LiteLLM only)
+litellm = "^1.71.1"
+
+# Vector databases and embeddings
+qdrant-client = "^1.7.0"
+sentence-transformers = "^2.2.2"
+
+# Code parsing (simplified - only essential ones)
+# tree-sitter = "^0.21.0"
+# tree-sitter-python = "^0.21.0"
+
+# Database and caching
+asyncpg = "^0.29.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.23"}
+alembic = "^1.13.0"
+redis = {extras = ["hiredis"], version = "^5.0.1"}
+
+# HTTP and async
+httpx = "^0.28.1"
+aiofiles = "^23.2.1"
+
+# Data processing and utilities
+pandas = "^2.1.4"
+numpy = "^1.25.2"
+python-multipart = "^0.0.6"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+bcrypt = "3.2.2"
+
+# Monitoring and observability
+prometheus-client = "^0.19.0"
+structlog = "^23.2.0"
+
+# Development and testing
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+black = "^23.11.0"
+isort = "^5.12.0"
+mypy = "^1.7.1"
+
+[tool.poetry.group.dev.dependencies]
+# Additional development dependencies
+ipython = "^8.17.2"
+pytest-mock = "^3.12.0"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["app", "agents"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = [
+    "--strict-markers",
+    "--cov=app",
+    "--cov-report=term-missing",
+]
+asyncio_mode = "auto"
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]

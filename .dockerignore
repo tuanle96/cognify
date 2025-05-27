@@ -1,0 +1,244 @@
+# Cognify Project .dockerignore
+# Exclude files and directories from Docker build context
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+# Environment files (will be mounted or set via Docker)
+.env*
+!.env.example
+
+# Secrets and keys
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+config/secrets/
+
+# =============================================================================
+# VERSION CONTROL
+# =============================================================================
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# =============================================================================
+# PYTHON CACHE & BUILD
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =============================================================================
+# TESTING & COVERAGE
+# =============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+test-results/
+test-reports/
+
+# Test databases
+test.db
+*.sqlite
+*.sqlite3
+
+# =============================================================================
+# DOCUMENTATION
+# =============================================================================
+# README.md  # Allow main README for Docker build
+CHANGELOG.md
+LICENSE
+docs/
+# *.md  # Allow README.md for Docker build
+!README.md
+!app/README.md
+
+# Documentation build
+docs/_build/
+site/
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Editor temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# =============================================================================
+# LOGS & MONITORING
+# =============================================================================
+# Log files
+*.log
+logs/
+log/
+
+# Monitoring data
+prometheus/
+grafana/
+
+# =============================================================================
+# AI/ML ARTIFACTS (Large files)
+# =============================================================================
+# Model files (should be downloaded in container)
+models/
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Dataset files (should be mounted or downloaded)
+data/
+datasets/
+*.csv
+*.tsv
+*.json
+*.jsonl
+*.parquet
+
+# Embeddings and vectors (generated at runtime)
+embeddings/
+vectors/
+*.npy
+*.npz
+
+# Training artifacts
+checkpoints/
+wandb/
+mlruns/
+tensorboard/
+
+# =============================================================================
+# DOCKER RELATED
+# =============================================================================
+# Docker files (not needed in build context)
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# Docker volumes
+docker-volumes/
+.docker/
+
+# =============================================================================
+# SCRIPTS & UTILITIES (Development only)
+# =============================================================================
+# Development scripts
+scripts/debug/
+scripts/manual_tests/
+scripts/test_runners/
+scripts/utilities/
+
+# Deployment scripts (use separate deployment image)
+scripts/deploy*.sh
+scripts/setup*.sh
+
+# =============================================================================
+# TESTS (Exclude from production image)
+# =============================================================================
+tests/
+test_*.py
+*_test.py
+
+# =============================================================================
+# TEMPORARY & CACHE
+# =============================================================================
+# Temporary files
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Cache directories
+.cache/
+cache/
+
+# =============================================================================
+# INFRASTRUCTURE (Not needed in app container)
+# =============================================================================
+# Kubernetes manifests
+infrastructure/
+k8s/
+kubernetes/
+
+# Terraform files
+*.tf
+*.tfvars
+terraform/
+
+# =============================================================================
+# CI/CD (Not needed in app container)
+# =============================================================================
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+Jenkinsfile
+
+# =============================================================================
+# BACKUP & ARCHIVE
+# =============================================================================
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# =============================================================================
+# MISC DEVELOPMENT FILES
+# =============================================================================
+# Package manager files (will be handled by Dockerfile)
+poetry.lock
+Pipfile.lock
+requirements-dev.txt
+
+# Configuration files (will be set via environment)
+config/local/
+config/development/
+
+# Sample/example files
+examples/
+samples/
+
+# Performance profiling
+*.prof
+*.profile
+
+# Security scanning results
+.snyk
+security-report.*

@@ -1,0 +1,360 @@
+# Cognify Project .gitignore
+# Comprehensive ignore rules for Python, Docker, and AI/ML projects
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+# Environment files (keep .env.example for template)
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+.env.testing
+
+# API Keys and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+config/secrets/
+
+# =============================================================================
+# PYTHON
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# =============================================================================
+# AI/ML SPECIFIC
+# =============================================================================
+# Model files
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.tflite
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Dataset files
+*.csv
+*.tsv
+*.json
+*.jsonl
+*.parquet
+*.feather
+*.arrow
+
+# Embeddings and vectors
+embeddings/
+vectors/
+*.npy
+*.npz
+
+# Checkpoints
+checkpoints/
+*.ckpt
+*.checkpoint
+
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# TensorBoard
+logs/
+tensorboard/
+
+# Jupyter notebooks (optional - uncomment if you don't want to track)
+# *.ipynb
+
+# =============================================================================
+# DATABASE
+# =============================================================================
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+test.db
+cognify.db
+
+# PostgreSQL
+*.dump
+*.sql.gz
+
+# Database backups
+*.backup
+*.bak
+
+# =============================================================================
+# DOCKER
+# =============================================================================
+# Docker volumes
+docker-volumes/
+.docker/
+
+# =============================================================================
+# LOGS & MONITORING
+# =============================================================================
+# Log files
+*.log
+logs/
+log/
+*.log.*
+
+# Monitoring data
+prometheus/
+grafana/data/
+
+# =============================================================================
+# TEMPORARY & CACHE FILES
+# =============================================================================
+# Temporary files
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Cache directories
+.cache/
+cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =============================================================================
+# IDE & EDITOR
+# =============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# TESTING
+# =============================================================================
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+test-results/
+test-reports/
+
+# Generated test files and results
+*_test_results*.json
+*_results_*.json
+semantic_rag_results_*.json
+rag_search_results_*.json
+test_results.json
+simple_api_test_results.json
+
+# Test databases
+production_test.db
+test_*.db
+*_test.db
+
+# =============================================================================
+# DOCUMENTATION
+# =============================================================================
+# Generated docs
+docs/_build/
+docs/build/
+site/
+
+# =============================================================================
+# MISC
+# =============================================================================
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Large files (should use Git LFS)
+*.bin
+*.dat
+
+# Node.js (if using any JS tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+cognify/app/services/cache/llm_cache.py
